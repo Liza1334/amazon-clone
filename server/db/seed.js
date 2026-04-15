@@ -98,6 +98,27 @@ await client.query(`
     url TEXT,
     is_primary BOOLEAN DEFAULT false
   );
+  CREATE TABLE IF NOT EXISTS cart (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER,
+  product_id INTEGER,
+  quantity INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER,
+  total NUMERIC,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id SERIAL PRIMARY KEY,
+  order_id INTEGER,
+  product_id INTEGER,
+  quantity INTEGER,
+  price NUMERIC
+);
 `);
 
 
