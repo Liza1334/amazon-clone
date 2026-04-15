@@ -6,13 +6,15 @@ dotenv.config({ path: "../.env" });
 
 const { Pool } = pg;
 
+
 const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'amazon_clone',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 1234
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
+
 
 const categories = [
   { name: 'Electronics', slug: 'electronics', description: 'Latest gadgets and electronic devices' },
@@ -105,10 +107,10 @@ async function seed() {
 
     client.release();
     console.log('Database seeding completed!');
-    process.exit(0);
+
   } catch (error) {
     console.error('Error seeding database:', error);
-    process.exit(1);
+
   }
 }
 
