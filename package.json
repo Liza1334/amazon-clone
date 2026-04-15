@@ -1,0 +1,14 @@
+{
+  "name": "amazon-clone",
+  "version": "1.0.0",
+  "description": "Full-stack Amazon clone with React frontend and Express backend",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
