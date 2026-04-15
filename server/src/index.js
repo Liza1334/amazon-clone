@@ -6,7 +6,7 @@ import authRoutes from './routes/authRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import { errorHandler } from './middleware/errorMiddleware.js'
-
+import seed from '../db/seed.js'
 dotenv.config()
 
 const app = express()
@@ -25,6 +25,15 @@ app.get('/api/health', (req, res) => {
     data: { status: 'ok' },
     message: 'Server is running'
   })
+})
+app.get('/seed', async (req, res) => {
+  try {
+    await seed()
+    res.send('Database seeded successfully')
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Seeding failed')
+  }
 })
 
 app.use(errorHandler)
