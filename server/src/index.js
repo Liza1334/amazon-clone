@@ -9,6 +9,15 @@ import { errorHandler } from './middleware/errorMiddleware.js'
 import seed from '../db/seed.js'
 dotenv.config()
 
+
+
+app.get('/seed', async (req, res) => {
+  await seed();
+  res.send('Database seeded successfully 🚀');
+});
+
+
+
 const app = express()
 
 app.use(cors())

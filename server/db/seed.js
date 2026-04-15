@@ -61,6 +61,45 @@ const products = [
 async function seed() {
   try {
     const client = await pool.connect();
+  
+await client.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    email TEXT UNIQUE,
+    password TEXT,
+    is_admin BOOLEAN DEFAULT false
+  );
+
+  CREATE TABLE IF NOT EXISTS categories (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    slug TEXT UNIQUE,
+    description TEXT
+  );
+
+  CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    slug TEXT UNIQUE,
+    description TEXT,
+    price NUMERIC,
+    stock INTEGER,
+    rating NUMERIC,
+    category_id INTEGER REFERENCES categories(id),
+    specs JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS product_images (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER REFERENCES products(id),
+    url TEXT,
+    is_primary BOOLEAN DEFAULT false
+  );
+`);
+
 
     console.log('Seeding database...');
 
