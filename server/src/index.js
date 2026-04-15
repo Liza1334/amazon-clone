@@ -11,11 +11,6 @@ dotenv.config()
 
 
 
-app.get('/seed', async (req, res) => {
-  await seed();
-  res.send('Database seeded successfully 🚀');
-});
-
 
 
 const app = express()
@@ -35,6 +30,9 @@ app.get('/api/health', (req, res) => {
     message: 'Server is running'
   })
 })
+
+
+
 app.get('/seed', async (req, res) => {
   try {
     await seed()
