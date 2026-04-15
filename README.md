@@ -1,38 +1,62 @@
-# Amazon Clone
+# 🛒 Amazon Clone (E-Commerce Platform)
 
-A full-stack e-commerce application inspired by Amazon, built with React and Node.js.
+A full-stack e-commerce application inspired by Amazon, built using React, Node.js, and PostgreSQL.
 
-## Project Structure
+---
 
-```
-├── client/          # React + Vite frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── pages/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   └── package.json
-│
-├── server/          # Express.js backend
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── routes/
-│   │   └── index.js
-│   ├── schema.sql
-│   └── package.json
-│
-├── package.json     # Root package.json
-└── README.md
-```
 
-## Tech Stack
+
+## 🚀 Live Demo
+
+- 🌐 Frontend: https://amazon-clone-seven-mauve.vercel.app  
+- ⚙️ Backend: https://amazon-clone-backend-pe3t.onrender.com  
+
+---
+
+## 📌 Features
+
+### 🛍 Product Listing
+- Grid layout similar to Amazon
+- Product cards with image, name, price
+- Category-based filtering
+- Search functionality
+
+### 📄 Product Detail Page
+- Product description and specifications
+- Price and stock details
+- Add to Cart
+- Buy Now
+
+### 🛒 Cart System
+- Add/remove items
+- Update quantity
+- Cart total calculation
+
+### 📦 Order System
+- Checkout page
+- Order placement
+- Order confirmation page with order ID
+- Cart cleared after order
+
+---
+
+## 🗄 Database Design
+
+Tables:
+- users
+- products
+- categories
+- product_images
+- cart
+- orders
+- order_items
+
+---
+
+## 🧰 Tech Stack
 
 ### Frontend
-- React 18
-- Vite
+- React.js (Vite)
 - React Router DOM
 - Axios
 - Tailwind CSS
@@ -40,57 +64,16 @@ A full-stack e-commerce application inspired by Amazon, built with React and Nod
 ### Backend
 - Node.js
 - Express.js
-- PostgreSQL (pg)
-- bcrypt
-- jsonwebtoken
-- express-validator
-- cors
-- dotenv
-
-## Prerequisites
-
-- Node.js (v14+)
 - PostgreSQL
+- bcrypt
+- JWT
+- express-validator
 
-## Setup
+---
 
-1. **Install dependencies:**
-   ```bash
-   npm run install:all
-   ```
+## ⚙️ Setup Instructions
 
-2. **Database Setup:**
-   - Create PostgreSQL database: `createdb amazon_clone`
-   - Run schema: `psql -d amazon_clone -f server/schema.sql`
-
-3. **Configure Environment:**
-   - Update `server/.env` with your PostgreSQL credentials
-
-4. **Start Development:**
-   ```bash
-   npm run dev
-   ```
-
-   This starts both frontend (port 5173) and backend (port 5000).
-
-## API Endpoints
-
-### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get product by ID
-- `POST /api/products` - Create product
-- `PUT /api/products/:id` - Update product
-- `DELETE /api/products/:id` - Delete product
-
-### Auth
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user (protected)
-
-## Features
-
-- User authentication (register/login)
-- Product listing with details
-- Shopping cart functionality
-- Responsive design with Tailwind CSS
-- JWT-based authentication
+### 1. Clone the repository
+```bash
+git clone https://github.com/Liza1334/amazon-clone.git
+cd amazon-clone
