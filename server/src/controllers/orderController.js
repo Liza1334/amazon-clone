@@ -1,11 +1,11 @@
 import { pool } from '../config/db.js'
 
+// ✅ CREATE ORDER
 export const createOrder = async (req, res, next) => {
   try {
     const userId = req.body.user_id || 1
     const { shipping_address } = req.body
 
-    // ✅ FIXED: cart instead of cart_items
     const cartItems = await pool.query(
       `SELECT c.product_id, c.quantity, p.price 
        FROM cart c
@@ -31,9 +31,10 @@ export const createOrder = async (req, res, next) => {
     try {
       await client.query('BEGIN')
 
+      // ✅ FIX: total + status
       const orderResult = await client.query(
-        `INSERT INTO orders (user_id, total, created_at) 
-         VALUES ($1, $2, CURRENT_TIMESTAMP) RETURNING *`,
+        `INSERT INTO orders (user_id, total, status, created_at) 
+         VALUES ($1, $2, 'pending', CURRENT_TIMESTAMP) RETURNING *`,
         [userId, totalAmount]
       )
 
@@ -47,17 +48,16 @@ export const createOrder = async (req, res, next) => {
         )
       }
 
-      // ✅ FIXED: cart instead of cart_items
       await client.query('DELETE FROM cart WHERE user_id = $1', [userId])
 
       await client.query('COMMIT')
 
       const fullOrder = await pool.query(
-        `SELECT o.*, 
+        `SELECT o.id, o.total, o.status, o.created_at,
                 json_agg(json_build_object(
                   'product_id', oi.product_id,
                   'quantity', oi.quantity,
-                  'price', oi.price,
+                  'unit_price', oi.price,
                   'name', p.name,
                   'image', (SELECT url FROM product_images WHERE product_id = p.id AND is_primary = true LIMIT 1)
                 )) as items
@@ -88,16 +88,17 @@ export const createOrder = async (req, res, next) => {
   }
 }
 
+// ✅ GET ORDERS
 export const getOrders = async (req, res, next) => {
   try {
     const userId = req.query.user_id || 1
 
     const result = await pool.query(
-      `SELECT o.id, o.total, o.created_at,
+      `SELECT o.id, o.total, o.status, o.created_at,
               json_agg(json_build_object(
                 'product_id', oi.product_id,
                 'quantity', oi.quantity,
-                'price', oi.price,
+                'unit_price', oi.price,
                 'name', p.name
               )) as items
        FROM orders o
